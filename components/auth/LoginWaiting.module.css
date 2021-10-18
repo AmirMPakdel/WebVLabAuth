@@ -1,0 +1,184 @@
+.wcard{
+    display: flex;
+    align-items: flex-start;
+    min-width: 48rem;
+    width: 74vw;
+    max-width: 52rem;
+    margin-top: 3rem;
+    border-radius: 1rem;
+    background-color: white;
+    box-shadow: -10px 10px 20px 0 rgb(115, 110, 136, 0.15);
+    height: 33rem;
+}
+
+.right_sec{
+    width: calc(100% - 20rem);
+    height: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 3rem;
+}
+
+.sec1{
+    width: 100%;
+    display: flex;
+    transform: translateY(-1rem);
+}
+
+.mc_logo{
+    width: 4rem;
+}
+
+.title{
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.text1{
+    color: #707070;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.login_link{
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+.input{
+    width: 100% !important;
+    margin-top: 0.6rem !important;
+}
+
+.sec2{
+    display: flex;
+    margin-top: 1rem;
+}
+
+.rules_text{
+    font-size: 0.88rem;
+    font-weight: 500;
+    margin-right: 0.3rem;
+}
+
+.btn{
+    margin-top: 1rem !important;
+}
+
+.sec3{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+.left_sec{
+    width: 20rem;
+    height: 100%;
+    background-color: rgba(131, 145, 184, 0.07);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 6rem;
+}
+
+.slider_con{
+    width: 16rem;
+    height: 16rem;
+}
+
+.car_item_con{
+    width: 16rem;
+    height: 16rem;
+}
+
+.car_img{
+    width: 16rem;
+    height: 16rem;
+}
+
+.car_dots{
+    transform: translateY(8.6rem) scale(1.2);
+}
+
+.slide_title{
+    font-size: 1rem;
+    font-weight: 700;
+    width: 100%;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.slide_text{
+    font-size: 0.82rem;
+    font-weight: 500;
+    width: 100%;
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+.send_again, 
+.timer{
+    font-size: 1rem;
+    font-weight: 700;
+    border-bottom: solid #CECECE 0.05rem;
+    width: 5rem;
+    padding-bottom: 0.2rem;
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.send_again{
+    cursor: pointer;
+    color: #303d68;
+    border-bottom-color: #49598f;
+}
+
+.back{
+    position: absolute;
+    display: flex;
+    direction: rtl;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #49598f;
+    left: 1rem;
+    top: 2.6rem;
+    align-items: center;
+}
+
+.back_img{
+    width: 1.2rem;
+    margin-right: 0.5rem;
+}
+
+
+@media(max-width:768px){
+
+    .wcard{
+        width: 92%;
+        max-width: 27rem;
+        min-width: unset;
+        height: 31.2rem;
+    }
+
+    .mc_logo{
+        margin-bottom: 1rem;
+    }
+
+    .right_sec{
+        width: 100%;
+        padding: 1.6rem;
+    }
+
+    .left_sec{
+        display: none;
+    }
+}
+

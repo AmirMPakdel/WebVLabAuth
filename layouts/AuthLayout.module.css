@@ -1,0 +1,19 @@
+.con{
+    height: 100%;
+    width: 100%;
+    min-height: 34rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: #303d68;
+    background-image: radial-gradient(circle at 50% 45%, #5064a0, #303d68 83%);
+}
+

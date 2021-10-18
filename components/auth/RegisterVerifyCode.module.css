@@ -1,0 +1,85 @@
+.con{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.top_message{
+    font-size: 0.75rem;
+    text-align: center;
+    padding: 0 2rem;
+}
+
+.title{
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+    padding: 0 2rem;
+}
+
+.input_con{
+    width: 11rem !important;
+}
+
+.input{
+    text-align: center;
+}
+
+.mobile{
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #CECECE;
+}
+
+.btn{
+    width: 16rem;
+}
+
+.send_again, 
+.timer{
+    font-size: 0.88rem;
+    border-bottom: solid #CECECE 0.05rem;
+    width: 5rem;
+    padding-bottom: 0.2rem;
+    text-align: center;
+}
+
+.send_again{
+    cursor: pointer;
+    color: #303d68;
+    border-bottom-color: #49598f;
+}
+
+.back{
+    position: absolute;
+    display: flex;
+    direction: rtl;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #49598f;
+    left: 0rem;
+    top: 0rem;
+    align-items: center;
+}
+
+.back_img{
+    width: 1.2rem;
+    margin-right: 0.5rem;
+}
+
+@media(max-width:768px){
+    .title{
+        padding: 0 1rem;
+    }
+    
+    .top_message{
+        padding: 0 1rem;
+    }
+
+    .con{
+        padding-top: 1rem;
+    }
+}

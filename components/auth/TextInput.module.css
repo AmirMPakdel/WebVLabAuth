@@ -1,0 +1,71 @@
+.rinput_con{
+    display: flex;
+    direction: rtl;
+    align-items: center;
+    padding: 0.4rem;
+    height: 3rem;
+    margin-top: 1.5rem;
+    width: 100%;
+    direction: rtl;
+    border: #dadada solid 1px;
+    border-radius: 0.5rem;
+}
+
+.rinput{
+    width: 85%;
+    display: flex;
+    padding-top: 0.1rem;
+    padding-right: 0.6rem;
+    font-size: 1.06rem;
+}
+
+.rinput_icon{
+    position: absolute;
+    left: 1rem;
+    height: 1.1rem;
+    image-rendering: unset;
+}
+
+.rinput_title{
+    position: absolute;
+    background-color: white;
+    top: -0.6rem;
+    right: 1rem;
+    padding: 0 0.5rem;
+    font-size: 0.8rem;
+    color: #b6b8b5;
+}
+
+.rinput_unit{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 500;
+    top: 0;
+    left: 0;
+    border-radius: 0.5rem 0 0 0.5rem;
+    padding: 0 0.8rem;
+    color: #696d79;
+    background-color: #dadada;
+    height: 100%;
+}
+
+.password_eye{
+    width: 1.5rem;
+    position: absolute;
+    left: 0.8rem;
+    cursor: pointer;
+}
+
+.error_text{
+    position: absolute;
+    background-color: white;
+    bottom: -0.6rem;
+    left: 1rem;
+    padding: 0 0.5rem;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: rgba(199, 0, 0, 0.8);
+}

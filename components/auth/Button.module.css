@@ -1,0 +1,15 @@
+.con{
+    display: flex;
+    width: 100%;
+    margin-top: 1.5rem;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 0.5rem;
+    user-select: none;
+    box-shadow: 0 0.5rem 0.5rem -0.25rem rgb(80,100,160,50%);
+    background-color: #5064a0;
+    height: 3rem;
+    font-size: 1rem;
+}

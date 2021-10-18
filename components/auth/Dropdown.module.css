@@ -1,0 +1,80 @@
+.rDropdown_con{
+    width: 80%;
+    margin-top: 2rem;
+}
+
+.rDropdown_select{
+    padding: 0.4rem;
+    padding-right: 1rem;
+    height: 3rem;
+    font-size: 0.88rem;
+    width: 100%;
+    border: #dadada solid 1px;
+    border-radius: 0.5rem;
+    margin: 0;      
+    background-color: white !important;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+select.rDropdown_select {
+    background-image:
+        linear-gradient(45deg, transparent 50%, gray 50%),
+        linear-gradient(135deg, gray 50%, transparent 50%),
+        linear-gradient(to right, #ccc, #ccc);
+    background-position:
+        calc(10% - 20px) calc(1.3em),
+        calc(10% - 15px) calc(1.3em),
+        calc(10% - 2.5em) 0.5em;
+    background-size:
+        5px 5px,
+        5px 5px,
+        0px 1.5em;
+    background-repeat: no-repeat;
+}
+
+select.rDropdown_select:focus {
+    background-image:
+        linear-gradient(45deg, gray 50%, transparent 50%),
+        linear-gradient(135deg, transparent 50%,gray 50%),
+        linear-gradient(to right, #ccc, #ccc);
+    background-position:
+        calc(10% - 15px) 1.3em,
+        calc(10% - 20px) 1.3em,
+        calc(10% - 2.5em) 0.5em;
+    background-size:
+        5px 5px,
+        5px 5px,
+        0px 1.5em;
+    background-repeat: no-repeat;
+    /* border-color: green; */
+    outline: 0;
+
+}
+
+.rDropdown_options{
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    white-space: pre;
+    color: #192034;
+}
+
+.rDropdown_select{
+    text-align: right;
+    direction: rtl;
+    font-weight: 700;
+    color: #192034;
+}
+
+.rDropdown_title{
+    position: absolute;
+    top:-0.6rem;
+    padding: 0 0.5rem;
+    right: 1rem;
+    background-color: white;
+    font-size: 0.8rem;
+    color: #b6b8b5;
+}
