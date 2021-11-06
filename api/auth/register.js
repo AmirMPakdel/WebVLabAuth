@@ -1,12 +1,16 @@
 import { Component } from "react";
+import env from "../../env";
 import controller from "../../utils/controller";
 import myServer from "../../utils/myServer";
 import { checkCodeMeli, email_validation, mobile_validation } from "../../utils/validation";
+
+let regularExpression = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,64}$/;
 
 /**@param {Component} c*/
 export function continueRed(c){
 
     let s = c.state;
+
     let new_sate = {
         mobile_red:false,
         first_name_red:false,
@@ -37,8 +41,8 @@ export function continueRed(c){
         can = false;
         new_sate.email_red=true;
     }
-    if(s.password.length<8){
-        controller.openNotification("رمز عبور انتخابی باید حداقل 8  کاراکتر باشد", null, "error");
+    if(!regularExpression.test(s.password)){
+        controller.openNotification("رمز عبور باید حداقل 8 کاراکتر و دارای حداقل یک حرف کوچک و بزرگ انگلیسی، عدد و کاراکترهای خاص باشد", null, "error");
         can = false;
         new_sate.password_red=true;
     }
@@ -46,21 +50,22 @@ export function continueRed(c){
         can = false;
         new_sate.password_conf_red=true;
     }
+    
+    if(can){
+        s.g_recaptcha = grecaptcha.getResponse();
+    }
+
     if(can && !s.rules_accepted){
         can = false;
         controller.openNotification("برای ثبت نام باید قوانین و مقررات  سایت را بپذیرید", null, "error");
     }
-    if(can){
-        s.g_recaptcha = grecaptcha.getResponse();
-        console.log(s.g_recaptcha);
-    }
+
     if(can && (!s.g_recaptcha || !s.g_recaptcha.length || s.g_recaptcha.length<10)){
         can = false;
         controller.openNotification("کپچا تایید نشده", null, "error");
     }
 
     c.setState(new_sate);
-
     return can;
 }
 
@@ -69,14 +74,14 @@ export function register(c){
 
     c.setState({
         register_btn_loading:true
-    })
+    });
 
     let s = c.state;
     let p = {
         phone:s.mobile,
         firstName:s.first_name,
         lastName:s.last_name,
-        nationalId:s.national_code,
+        nationalId: s.national_code,
         "g-recaptcha-response":s.g_recaptcha,
         authenticationRequest: window.location.href,
         email:s.email,
@@ -98,8 +103,13 @@ export function register(c){
                 c.wcard.style.height="32rem";
                 c.right_sec.style.padding="2rem";
                 window.scrollTo(null, 0);
+    
+            }
 
-            }else if(data.error && data.error.errorCode==12800){
+        }else{
+
+            console.log(data);
+            if(data.error.errorCode == window.env.SERVER_CODES.ACCOUNT_EXISTS){
 
                 c.state.trackingId = data.response.trackingId;
                 c.state.page="opt";
@@ -213,7 +223,7 @@ export function registerOptConfirm(c){
 
     let p={
         trackingId:c.state.trackingId,
-        opt:c.state.opt_code,
+        otp:c.state.opt_code,
     }
 
     myServer.Post(myServer.urls.REGISTER_OPT_CONFIRM, p, {}, (err,data)=>{
@@ -226,10 +236,10 @@ export function registerOptConfirm(c){
 
                 if(d.status==="DONE"){
 
-                    controller.openNotification(data.message, null, "success");
+                    //controller.openNotification(data.message, null, "success");
 
                     setTimeout(()=>{
-                        window.location.href=d.urls;
+                        window.location.href=d.url;
                     },500);
 
                 }else{
@@ -280,7 +290,7 @@ export function recreateOptConfirm(c){
 
     let p={
         trackingId:c.state.trackingId,
-        opt:c.state.opt_code,
+        otp:c.state.opt_code,
     }
 
     myServer.Post(myServer.urls.RECREATE_OPT_CONFIRM, p, {}, (err,data)=>{
@@ -356,10 +366,10 @@ export function recreateConfirm(c){
 
                 if(d.status==="DONE"){
 
-                    controller.openNotification(data.message, null, "success");
+                    //controller.openNotification(data.message, null, "success");
 
                     setTimeout(()=>{
-                        window.location.href=d.urls;
+                        window.location.href=d.url;
                     },500);
 
                 }else{

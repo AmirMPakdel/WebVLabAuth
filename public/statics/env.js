@@ -6,7 +6,7 @@ window.env={
 
     SMS_TIMER:120, //seconds
 
-    G_RECAPTCHA_KEY:"6LeW0rwZAAAAAE7Vh-tYpUWy2pQvTcd2bAgHfSec",
+    G_RECAPTCHA_KEY:"6Lc4X5YcAAAAAPBIe2PeidBpB2aMLv_vaskdQIIK",
 
     REGISTER_SLIDERS:[
         {
@@ -24,5 +24,10 @@ window.env={
             title:"عنوان اسلاید سوم",
             text:"متن زیر عنوان اسلاید سوم"
         },
-    ]
+    ],
+
+    SERVER_CODES:{
+
+        "ACCOUNT_EXISTS": 12800,        
+    }
 };

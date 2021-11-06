@@ -3,6 +3,7 @@ import App from "next/app";
 import "../styles/global.css";
 import 'antd/dist/antd.css';
 import "../utils/poly";
+import env from "../env";
 import controller, { ControllerComponent } from "../utils/controller";
 import { CheckCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { notification } from 'antd';

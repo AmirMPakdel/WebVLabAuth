@@ -10,14 +10,14 @@ const myServer = {
         DOMAIN:domain,
 
         //register
-        REGISTER_USER:domain+"/user/register",
-        REGISTER_OPT_RESEND:domain+"/opt/resend",
-        REGISTER_OPT_CONFIRM:domain+"/opt/confirm",
-        RECREATE_OPT_CONFIRM:domain+"/recreate/opt/confirm",
-        RECREATE_CONFIRM:domain+"/recreate/confirm",
+        REGISTER_USER:domain+"/registration/user/register",
+        REGISTER_OPT_RESEND:domain+"/registration/user/otp/resend",
+        REGISTER_OPT_CONFIRM:domain+"/registration/user/otp/confirm",
+        RECREATE_OPT_CONFIRM:domain+"/registration/user/recreate/otp/confirm",
+        RECREATE_CONFIRM:domain+"/registration/user/recreate/confirm",
 
         //login
-        LOGIN_USER:domain+"/oauth/authenticate",
+        LOGIN_USER:domain+"/authorization/oauth/authenticate",
         LOGIN_WAITING:domain+"/authorization/oauth/waitting-page",
         LOGIN_REDIRECT:domain+"/authorization/oauth/rediret/client-page",
     },
@@ -72,34 +72,69 @@ function Get(url, config, cb){
  */
 function Post(url, data, config={}, cb){
 
-    if(!config.noAuthorization){
-        config.headers={
-            'Authorization': "Bearer "+getCookie(env.TOKEN_KEY),
-            'Accept-Language': "fa",
-        }
+    data = JSON.stringify(data);
+
+    let headers = {
+        'Accept-Language': 'fa',
+        'Content-Type': 'application/json'
     }
 
-    axios.post(url, data, config).then((res)=>{
-                
+    let token = getCookie(env.TOKEN_KEY);
+    if(token){
+        headers['Authorization']='Bearer '+getCookie(env.TOKEN_KEY);
+    }
+
+    config = {
+        method: 'post',
+        url,
+        headers,
+        data
+    };
+
+    axios(config)
+    .then(function (res) {
+
         if(env.ENVIRONMENT_MODE==="dev"){
             console.log(res);
         }
 
         if(res.status == 200){
 
-            if(res.data.successful){
+            if(res.data.response.successful){
                 cb(null, res.data);
             }else{
-                controller.openNotification(res.data.message, null, "error")
+                controller.openNotification(res.data.message, null, "error");
             }
+
         }
+    })
+    .catch(function (e) {
 
-    }).catch((e)=>{
+        if(e.response && e.response.data){
 
-        cb(e, null)
-        controller.openNotification(window.env.NETWORK_ERROR, null, "error")
+            if(e.response.data.error){
 
-        //TODO: ?
+                if(e.response.data.error.subErrors){
+
+                    e.response.data.error.subErrors.forEach(ele=>{
+
+                        controller.openNotification(ele.description, null, "error");
+                    });
+
+                }else{
+
+                    controller.openNotification(e.response.data.error.message, null, "error");
+                }
+            }
+
+            cb(e, e.response.data);
+
+        }else{
+
+            controller.openNotification(window.env.NETWORK_ERROR, null, "error");
+
+            cb(e, null);
+        }
     });
 }
 
