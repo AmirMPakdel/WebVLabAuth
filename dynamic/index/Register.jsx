@@ -1,6 +1,7 @@
 import { Carousel } from "antd";
 import Checkbox from "antd/lib/checkbox/Checkbox";
 import React, { Component } from "react";
+import env from "../../env";
 import { continueRed, register } from "../../api/auth/register";
 import Button from "../../components/auth/Button";
 import RegisterRecreate from "../../components/auth/RegisterRecreate";
@@ -65,6 +66,8 @@ export default class Register extends Component {
         document.title="ثبت نام";
 
         this.loadGCaptcha();
+
+        fill_fake_data(this);
     }
 
     loadGCaptcha=()=>{
@@ -188,8 +191,8 @@ export default class Register extends Component {
                                 </div>
 
                                 <div className={"g-recaptcha "+styles.g_captcha} id="g_example1" render="explicit"
-                                style={{minHeight:"78px",marginTop:"0.5rem"}}
-                                data-sitekey="6LeW0rwZAAAAAE7Vh-tYpUWy2pQvTcd2bAgHfSec"/>
+                                style={{minHeight:"78px",marginTop:"0.5rem"}}/>
+                                {/*data-sitekey={}/>*/}
                                 
                                 <Button className={styles.btn}
                                 title={"ثبت نام"}
@@ -248,6 +251,20 @@ export default class Register extends Component {
             </AuthLayout>
         )
     }
+}
+
+function fill_fake_data(c){
+    c.setState({
+        "authenticationRequest": "http://",
+        "password_conf": "12345678Gf@",
+        "email": "sadas@gmail.com",
+        "first_name": "امیرمحمد",
+        "last_name": "پاکدل",
+        "national_code": "3950241205",
+        "password": "12345678Gf@",
+        "mobile": "09981547091",
+        "rules_accepted":true,
+    })
 }
 
 const sliders_obj= window.env.REGISTER_SLIDERS;

@@ -1,6 +1,6 @@
-export default {
+let env = {
     
-    ENVIRONMENT_MODE:"prd",
-
-    SMS_TIMER : window.env.SMS_TIMER,
+    ENVIRONMENT_MODE:"dev",
 }
+
+export default env;
