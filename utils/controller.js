@@ -83,8 +83,8 @@ export class ControllerComponent extends Component{
 
     onResize=()=>{
         // rem
-        if (window.innerWidth > 1280) {
-            let rem = (window.innerWidth * 16) / 1280;
+        if (window.innerWidth > 1500) {
+            let rem = (window.innerWidth * 16) / 1500;
             document.getElementsByTagName("html")[0].style.fontSize = `${rem}px`;
         } else if (window.innerWidth < 360) {
             let rem = (window.innerWidth * 16) / 362;
