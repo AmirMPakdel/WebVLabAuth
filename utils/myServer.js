@@ -112,18 +112,25 @@ function Post(url, data, config={}, cb){
 
         if(e.response && e.response.data){
 
+            let exobj = expetions(e.response.data);
+
             if(e.response.data.error){
 
                 if(e.response.data.error.subErrors){
 
                     e.response.data.error.subErrors.forEach(ele=>{
 
-                        controller.openNotification(ele.description, null, "error");
+                        if(exobj.showErrorNotif){
+                            controller.openNotification(ele.description, null, "error");
+                        }
+                        
                     });
 
                 }else{
 
-                    controller.openNotification(e.response.data.error.message, null, "error");
+                    if(exobj.showErrorNotif){
+                        controller.openNotification(e.response.data.error.message, null, "error");
+                    }
                 }
             }
 
@@ -136,6 +143,30 @@ function Post(url, data, config={}, cb){
             cb(e, null);
         }
     });
+}
+
+function expetions(error_data){
+
+    let exobj = {
+
+        showErrorNotif:true
+    };
+
+    if(error_data.error.errorCode === window.env.REGISTER_TIME_EXPIRED){
+
+        setTimeout(()=>{
+
+            window.location.href = "/register";
+
+        }, 1500);
+        
+
+    }else if(error_data.error.errorCode === window.env.ACCOUNT_EXISTS){
+
+        exobj.showErrorNotif = false;
+    }
+
+    return exobj;
 }
 
 export default myServer;

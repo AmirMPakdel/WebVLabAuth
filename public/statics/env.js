@@ -28,6 +28,7 @@ window.env={
 
     SERVER_CODES:{
 
-        "ACCOUNT_EXISTS": 12800,        
+        "ACCOUNT_EXISTS": 12800,
+        "REGISTER_TIME_EXPIRED": 13400,    
     }
 };

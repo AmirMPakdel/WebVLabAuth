@@ -16,7 +16,8 @@ export function login(c){
         user_phone:c.state.mobile,
     }
 
-    //?response_type=code&client_id=Shatel_Mobile&state=6270&acr_values=2
+    //?response_type=code&client_id=Shatel&state=6270&acr_values=2
+    //09981547091
 
     myServer.Get(myServer.urls.LOGIN_USER, {params}, (err,data)=>{
 
