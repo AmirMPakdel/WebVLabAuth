@@ -26,6 +26,8 @@ export default class Login extends Component {
 
     componentDidMount(){
         document.title="ورود";
+        
+        fill_fakedata(this);
     }
 
     onMobile=(t)=>{
@@ -111,6 +113,13 @@ export default class Login extends Component {
             </AuthLayout>
         )
     }
+}
+
+function fill_fakedata(c){
+
+    c.setState({
+        mobile: "09981547091"
+    })
 }
 
 const types = [
