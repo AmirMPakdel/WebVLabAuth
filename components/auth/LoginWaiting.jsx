@@ -18,6 +18,11 @@ export default class LoginWaiting extends Component {
         this.startWaitingRequest();
     }
 
+    componentWillUnmount(){
+        clearInterval(this.interval);
+        clearInterval(this.waiting_interval);
+    }
+
     startWaitingRequest=()=>{
         loginWaiting(this.props.parent);
     }

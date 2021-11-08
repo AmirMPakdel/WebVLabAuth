@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Component } from "react";
 import controller, { getParamByName } from "../../utils/controller";
+import { getCookie, setCookie } from "../../utils/cookie";
 import myServer from "../../utils/myServer";
 
 /**@param {Component} c*/
@@ -41,7 +42,14 @@ export function login(c){
             
             if(data.response.userUniqueKey){
 
+                console.log(res.headers);
+
+                setCookie("_vl_lt", res.headers["authorization"], 1);
+
                 c.state.unique_key=data.response.userUniqueKey;
+                
+                setCookie("_vl_uuk", data.response.userUniqueKey, 1);
+
                 c.state.page="waiting";
                 window.scrollTo(null,0);
             }
@@ -50,17 +58,21 @@ export function login(c){
 
     }).catch(e=>{
 
-        if(e.response.data.error.errorCode === window.env.SERVER_CODES.AUTH_REQ_ALREADY_EXIST){
+        if(e.response && e.response.data){
 
-            c.state.page="waiting";
-            window.scrollTo(null,0);
-            c.setState({login_loading:false});
+            if(e.response.data.error.errorCode === window.env.SERVER_CODES.AUTH_REQ_ALREADY_EXIST){
 
-        }else if(e.response.data.error){
-
-            controller.openNotification(e.response.data.error.description, null, "error")
+                c.state.page="waiting";
+                window.scrollTo(null,0);
+                c.setState({login_loading:false});
+    
+            }else if(e.response.data.error){
+    
+                controller.openNotification(e.response.data.error.description, null, "error")
+            }
         }
 
+        c.setState({login_loading:false});
     });
 }
 
@@ -87,15 +99,30 @@ export function loginSendAgain(c){
         user_phone:c.state.mobile,
     }
 
+    let headers = {
+        'Authorization': "Bearer "+getCookie("_vl_lt"),
+    }
 
-    axios.get(myServer.urls.LOGIN_USER, {params}).then(res=>{
 
+    axios.get(myServer.urls.LOGIN_USER, {params, headers}).then(res=>{
 
         let d = res.data.response;
 
         if(d.userUniqueKey){
 
+            console.log(res.headers);
+
+            console.log(res.config.headers);
+
+            console.log(res);
+            
+
+            setCookie("_vl_lt", res.headers["Authorization"], 1);
+
             c.state.unique_key=d.userUniqueKey;
+
+            setCookie("_vl_uuk", data.response.userUniqueKey, 1);
+
             c.LoginWaiting.startCountdown();
         }
 
@@ -103,9 +130,11 @@ export function loginSendAgain(c){
 
     }).catch(e=>{
 
-        if(e.response.data.error){
+        if(e.response && e.response.data){
+            if(e.response.data.error){
 
-            controller.openNotification(e.response.data.error.description, null, "error")
+                controller.openNotification(e.response.data.error.description, null, "error")
+            }
         }
 
     });
@@ -114,6 +143,12 @@ export function loginSendAgain(c){
 /**@param {Component} c*/
 export function watingRequest(c){
     
+    //read from cookie
+    if(!c.state.unique_key || c.state.unique_key===""){
+
+        c.state.unique_key = getCookie("_vl_uuk");
+    }
+
     let params={
         unique_key:c.state.unique_key
     }
@@ -134,9 +169,11 @@ export function watingRequest(c){
 
     }).catch(e=>{
         
-        if(e.response.data.error){
+        if(e.response && e.response.data){
+            if(e.response.data.error){
 
-            controller.openNotification(e.response.data.error.description, null, "error")
+                controller.openNotification(e.response.data.error.description, null, "error")
+            }
         }
 
     });
