@@ -2,6 +2,8 @@ window.env={
 
     DOMAIN:"http://api.mob-id.com",
 
+    ENVIRONMENT_MODE: "dev",
+
     NETWORK_ERROR:"خطا در برقراری ارتباط با سرور",
 
     SMS_TIMER:120, //seconds

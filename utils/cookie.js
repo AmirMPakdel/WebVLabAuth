@@ -1,5 +1,3 @@
-import env from "../env";
-
 const setCookie = (cname, cvalue, exdays) => {
   var d = new Date();
   d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
@@ -8,10 +6,6 @@ const setCookie = (cname, cvalue, exdays) => {
 }
 
 const getCookie = (cname) => {
-
-  if(env.ENVIRONMENT_MODE==="dev"){
-    return env.CURRENT_DEV_USER_TOKEN;
-  }
 
   var name = cname + "=";
   var ca = document.cookie.split(";");

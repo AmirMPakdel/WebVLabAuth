@@ -32,7 +32,10 @@ export function login(c){
 
     axios.get(myServer.urls.LOGIN_USER, {params}).then(res=>{
 
-        if(env.ENVIRONMENT_MODE==="dev"){
+
+        console.log(res);
+
+        if(window.env.ENVIRONMENT_MODE==="dev"){
             console.log(res);
         }
 
@@ -44,7 +47,7 @@ export function login(c){
 
                 console.log(res.headers);
 
-                setCookie("_vl_lt", res.headers["authorization"], 1);
+                //setCookie("_vl_lt", res.headers["authorization"], 1);
 
                 c.state.unique_key=data.response.userUniqueKey;
                 
@@ -100,11 +103,15 @@ export function loginSendAgain(c){
     }
 
     let headers = {
-        'Authorization': "Bearer "+getCookie("_vl_lt"),
+        'Authorization': getCookie("_vl_lt"),
     }
 
 
     axios.get(myServer.urls.LOGIN_USER, {params, headers}).then(res=>{
+
+        if(window.env.ENVIRONMENT_MODE==="dev"){
+            console.log(res);
+        }
 
         let d = res.data.response;
 
@@ -117,7 +124,7 @@ export function loginSendAgain(c){
             console.log(res);
             
 
-            setCookie("_vl_lt", res.headers["Authorization"], 1);
+            //setCookie("_vl_lt", res.headers["Authorization"], 1);
 
             c.state.unique_key=d.userUniqueKey;
 
@@ -149,11 +156,22 @@ export function watingRequest(c){
         c.state.unique_key = getCookie("_vl_uuk");
     }
 
+    console.log(getCookie("_vl_lt"));
+
+    let headers = {
+        'Authorization': 'Bearer '+getCookie("_vl_lt"),
+    }
+
     let params={
         unique_key:c.state.unique_key
     }
 
-    axios.get(myServer.urls.LOGIN_WAITING, {params}).then(res=>{
+    axios.get(myServer.urls.LOGIN_WAITING, {params, headers}).then(res=>{
+
+        if(window.env.ENVIRONMENT_MODE==="dev"){
+            console.log(res);
+        }
+
 
         let d = res.data.response;
 

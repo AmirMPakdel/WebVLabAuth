@@ -43,7 +43,7 @@ function Get(url, config, cb){
 
     axios.get(url, config).then(res=>{
 
-        if(env.ENVIRONMENT_MODE==="dev"){
+        if(window.env.ENVIRONMENT_MODE==="dev"){
             console.log(res);
         }
 
@@ -94,7 +94,7 @@ function Post(url, data, config={}, cb){
     axios(config)
     .then(function (res) {
 
-        if(env.ENVIRONMENT_MODE==="dev"){
+        if(window.env.ENVIRONMENT_MODE==="dev"){
             console.log(res);
         }
 
