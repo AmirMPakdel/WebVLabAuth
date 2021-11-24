@@ -77,7 +77,7 @@ export default class LoginWaiting extends Component {
 
                     <div className={styles.title}>{"لطفا چند لحظه صبر کنید"}</div>
 
-                    <div className={styles.text1}>{"برای تکمیل اهراز هویت به لینک ارسال شده به موبایل خود بروید"}</div>
+                    <div className={styles.text1}>{"برای تکمیل احراز هویت به لینک ارسال شده به موبایل خود بروید"}</div>
 
                     {
                         this.props.parent.state.show_send_again?

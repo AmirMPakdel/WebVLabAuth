@@ -45,15 +45,15 @@ export function login(c){
             
             if(data.response.userUniqueKey){
 
-                console.log(res.headers);
 
-                //setCookie("_vl_lt", res.headers["authorization"], 1);
+                setCookie("_vl_lt", data.response.authorization, 1);
 
-                c.state.unique_key=data.response.userUniqueKey;
-                
                 setCookie("_vl_uuk", data.response.userUniqueKey, 1);
 
+                c.state.unique_key=data.response.userUniqueKey;                
+
                 c.state.page="waiting";
+
                 window.scrollTo(null,0);
             }
         }
@@ -113,22 +113,15 @@ export function loginSendAgain(c){
             console.log(res);
         }
 
-        let d = res.data.response;
+        let data = res.data;
+        
+        if(data.response.userUniqueKey){
 
-        if(d.userUniqueKey){
-
-            console.log(res.headers);
-
-            console.log(res.config.headers);
-
-            console.log(res);
-            
-
-            //setCookie("_vl_lt", res.headers["Authorization"], 1);
-
-            c.state.unique_key=d.userUniqueKey;
+            setCookie("_vl_lt", data.response.authorization, 1);
 
             setCookie("_vl_uuk", data.response.userUniqueKey, 1);
+
+            c.state.unique_key=data.response.userUniqueKey;
 
             c.LoginWaiting.startCountdown();
         }
@@ -190,7 +183,10 @@ export function watingRequest(c){
         if(e.response && e.response.data){
             if(e.response.data.error){
 
-                controller.openNotification(e.response.data.error.description, null, "error")
+                controller.openNotification(e.response.data.error.description, null, "error");
+                //clear interval and get back to login page
+                clearInterval(c.waiting_interval);
+                window.location.href = "/login";
             }
         }
 
@@ -204,7 +200,7 @@ export function loginWaiting(c){
 
         watingRequest(c);
 
-    },3000);
+    },4000);
 }
 
 /**@param {Component} c*/
