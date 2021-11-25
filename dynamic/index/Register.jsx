@@ -67,7 +67,7 @@ export default class Register extends Component {
 
         this.loadGCaptcha();
 
-        fill_fake_data(this);
+        //fill_fake_data(this);
     }
 
     loadGCaptcha=()=>{

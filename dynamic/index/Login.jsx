@@ -27,7 +27,7 @@ export default class Login extends Component {
     componentDidMount(){
         document.title="ورود";
         
-        fill_fakedata(this);
+        //fill_fakedata(this);
     }
 
     onMobile=(t)=>{

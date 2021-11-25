@@ -9,23 +9,22 @@ export function login(c){
 
     c.setState({mobile_red:false, login_loading:true});
 
-    // let params={
-    //     response_type:getParamByName("response_type"),
-    //     client_id:getParamByName("client_id"),
-    //     state:getParamByName("state"),
-    //     scope:"profile-read,profile-write",
-    //     acr:getParamByName("acr_values"),
-    //     user_phone:c.state.mobile,
-    // }
-
     let params={
-        response_type: "code",
-        client_id: "appclient",
-        state: "1234",
-        scope:"profile-read,address-read",
-        acr: 2,
+        response_type:getParamByName("response_type"),
+        client_id:getParamByName("client_id"),
+        state:getParamByName("state"),
+        scope: window.env.LOGIN_SCOPE,
+        acr:getParamByName("acr_values"),
         user_phone:c.state.mobile,
     }
+    // let params={
+    //     response_type: "code",
+    //     client_id: "appclient",
+    //     state: "1234",
+    //     scope:"profile-read,address-read",
+    //     acr: 2,
+    //     user_phone:c.state.mobile,
+    // }
 
     //?response_type=code&client_id=appclient&state=1234&scope=profile-read,address-read&acr_values=2
     //09981547091
@@ -44,7 +43,6 @@ export function login(c){
         if(res.status == 200){
             
             if(data.response.userUniqueKey){
-
 
                 setCookie("_vl_lt", data.response.authorization, 1);
 
@@ -85,22 +83,22 @@ export function loginSendAgain(c){
     if(c.send_again_lock)return;
     c.send_again_lock=true;
 
-    // let params={
-    //     response_type:getParamByName("response_type"),
-    //     client_id:getParamByName("client_id"),
-    //     state:getParamByName("state"),
-    //     scope:"profile-read,profile-write",
-    //     acr:getParamByName("acr_values"),
-    //     user_phone:c.state.mobile,
-    // }
     let params={
-        response_type: "code",
-        client_id: "appclient",
-        state: "1234",
-        scope:"profile-read,address-read",
-        acr: 2,
+        response_type:getParamByName("response_type"),
+        client_id:getParamByName("client_id"),
+        state:getParamByName("state"),
+        scope: window.env.LOGIN_SCOPE,
+        acr:getParamByName("acr_values"),
         user_phone:c.state.mobile,
     }
+    // let params={
+    //     response_type: "code",
+    //     client_id: "appclient",
+    //     state: "1234",
+    //     scope:"profile-read,address-read",
+    //     acr: 2,
+    //     user_phone:c.state.mobile,
+    // }
 
     let headers = {
         'Authorization': getCookie("_vl_lt"),
@@ -208,5 +206,19 @@ export function loginEndpoint(c){
 
     let unique_key = c.state.unique_key;
 
-    window.location.href=myServer.urls.LOGIN_REDIRECT+"?unique_key="+unique_key;
+    let headers = {
+        'Authorization': 'Bearer '+getCookie("_vl_lt"),
+    }
+
+    let params={
+        unique_key
+    }
+
+    axios.get(myServer.urls.LOGIN_REDIRECT, {params, headers}).then(res=>{
+       
+        if(window.env.ENVIRONMENT_MODE == "dev"){
+            console.log(res);
+        }
+        
+    });
 }

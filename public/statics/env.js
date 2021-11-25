@@ -8,6 +8,8 @@ window.env={
 
     SMS_TIMER:120, //seconds
 
+    LOGIN_SCOPE: "profile-read,address-read",
+
     G_RECAPTCHA_KEY:"6Lc4X5YcAAAAAPBIe2PeidBpB2aMLv_vaskdQIIK",
 
     REGISTER_SLIDERS:[
@@ -30,9 +32,9 @@ window.env={
 
     SERVER_CODES:{
 
+        //register
         "ACCOUNT_EXISTS": 12800,
         "REGISTER_TIME_EXPIRED": 13400,
-        
         
         //login
         "AUTH_REQ_ALREADY_EXIST": 409,
