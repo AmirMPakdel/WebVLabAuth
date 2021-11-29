@@ -1,14 +1,13 @@
 import { Carousel } from "antd";
 import Checkbox from "antd/lib/checkbox/Checkbox";
 import React, { Component } from "react";
-import env from "../../env";
 import { continueRed, register } from "../../api/auth/register";
 import Button from "../../components/auth/Button";
 import RegisterRecreate from "../../components/auth/RegisterRecreate";
 import RegisterVerifyCode from "../../components/auth/RegisterVerifyCode";
 import TextInput from "../../components/auth/TextInput";
 import AuthLayout from "../../layouts/AuthLayout";
-import controller from "../../utils/controller";
+import { getParamByName } from "../../utils/controller";
 import styles from "./Register.module.css";
 
 export default class Register extends Component {
@@ -25,7 +24,6 @@ export default class Register extends Component {
         password:"",
         password_conf:"",
         rules_accepted:false,
-        g_recaptcha:"",
 
         trackingId:"",
 
@@ -63,9 +61,18 @@ export default class Register extends Component {
     }
 
     componentDidMount(){
+
         document.title="ثبت نام";
 
-        this.loadGCaptcha();
+        let url_params = window.location.href.split("?")[1];
+
+        if(!url_params){
+            url_params = "";
+        }else{
+            url_params = "?"+url_params;
+        }
+        
+        this.setState({url_params}, this.loadGCaptcha);
 
         //fill_fake_data(this);
     }
@@ -74,7 +81,7 @@ export default class Register extends Component {
         setTimeout(()=>{
 
             grecaptcha.render(document.getElementById("g_example1"), {
-                'sitekey' : window.env.G_RECAPTCHA_KEY
+                'sitekey' : env.G_RECAPTCHA_KEY
             });
 
         },500)
@@ -124,7 +131,8 @@ export default class Register extends Component {
 
                                     <div className={styles.title}>{"ثبت نام"}</div>
 
-                                    <a href={"/login"} className={styles.login_link}>{"حساب کاربری دارم"}</a>
+                                    <a href={env.PATHS.LOGIN_PAGE+this.state.url_params} 
+                                    className={styles.login_link}>{"حساب کاربری دارم"}</a>
 
                                 </div>
 
@@ -184,7 +192,7 @@ export default class Register extends Component {
                                     onChange={this.onRules}/>
 
                                     <div className={styles.rules_text}>
-                                        <a href={"/terms"}>{"قوانین و مقررات "}</a>
+                                        <a href={env.PATHS.TERMS_PAGE}>{"قوانین و مقررات "}</a>
                                         {"را مطالعه کردم و می پذیرم."}
                                     </div>
 
@@ -255,7 +263,6 @@ export default class Register extends Component {
 
 function fill_fake_data(c){
     c.setState({
-        "authenticationRequest": "http://",
         "password_conf": "12345678Gf@",
         "email": "sadas@gmail.com",
         "first_name": "امیرمحمد",
@@ -267,4 +274,4 @@ function fill_fake_data(c){
     })
 }
 
-const sliders_obj= window.env.REGISTER_SLIDERS;
+const sliders_obj= env.REGISTER_SLIDERS;

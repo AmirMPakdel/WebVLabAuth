@@ -13,7 +13,7 @@ export function login(c){
         response_type:getParamByName("response_type"),
         client_id:getParamByName("client_id"),
         state:getParamByName("state"),
-        scope: window.env.LOGIN_SCOPE,
+        scope: env.LOGIN_SCOPE,
         acr:getParamByName("acr_values"),
         user_phone:c.state.mobile,
     }
@@ -29,12 +29,12 @@ export function login(c){
     //?response_type=code&client_id=appclient&state=1234&scope=profile-read,address-read&acr_values=2
     //09981547091
 
-    axios.get(myServer.urls.LOGIN_USER, {params}).then(res=>{
+    axios.get(env.PATHS.DOMAIN+myServer.urls.LOGIN_USER, {params}).then(res=>{
 
 
         console.log(res);
 
-        if(window.env.ENVIRONMENT_MODE==="dev"){
+        if(env.ENVIRONMENT_MODE==="dev"){
             console.log(res);
         }
 
@@ -59,9 +59,9 @@ export function login(c){
 
     }).catch(e=>{
 
-        if(e.response && e.response.data){
+        if(e.response && e.response.data && e.response.data.error){
 
-            if(e.response.data.error.errorCode === window.env.SERVER_CODES.AUTH_REQ_ALREADY_EXIST){
+            if(e.response.data.error.errorCode === env.SERVER_CODES.AUTH_REQ_ALREADY_EXIST){
 
                 c.state.page="waiting";
                 window.scrollTo(null,0);
@@ -87,7 +87,7 @@ export function loginSendAgain(c){
         response_type:getParamByName("response_type"),
         client_id:getParamByName("client_id"),
         state:getParamByName("state"),
-        scope: window.env.LOGIN_SCOPE,
+        scope: env.LOGIN_SCOPE,
         acr:getParamByName("acr_values"),
         user_phone:c.state.mobile,
     }
@@ -105,9 +105,9 @@ export function loginSendAgain(c){
     }
 
 
-    axios.get(myServer.urls.LOGIN_USER, {params, headers}).then(res=>{
+    axios.get(env.PATHS.DOMAIN+myServer.urls.LOGIN_USER, {params, headers}).then(res=>{
 
-        if(window.env.ENVIRONMENT_MODE==="dev"){
+        if(env.ENVIRONMENT_MODE==="dev"){
             console.log(res);
         }
 
@@ -157,9 +157,9 @@ export function watingRequest(c){
         unique_key:c.state.unique_key
     }
 
-    axios.get(myServer.urls.LOGIN_WAITING, {params, headers}).then(res=>{
+    axios.get(env.PATHS.DOMAIN+myServer.urls.LOGIN_WAITING, {params, headers}).then(res=>{
 
-        if(window.env.ENVIRONMENT_MODE==="dev"){
+        if(env.ENVIRONMENT_MODE==="dev"){
             console.log(res);
         }
 
@@ -214,9 +214,9 @@ export function loginEndpoint(c){
         unique_key
     }
 
-    axios.get(myServer.urls.LOGIN_REDIRECT, {params, headers}).then(res=>{
+    axios.get(env.PATHS.DOMAIN+myServer.urls.LOGIN_REDIRECT, {params, headers}).then(res=>{
        
-        if(window.env.ENVIRONMENT_MODE == "dev"){
+        if(env.ENVIRONMENT_MODE == "dev"){
             console.log(res);
         }
         

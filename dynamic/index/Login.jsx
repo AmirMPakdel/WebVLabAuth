@@ -5,6 +5,7 @@ import Dropdown from "../../components/auth/Dropdown";
 import LoginWaiting from "../../components/auth/LoginWaiting";
 import TextInput from "../../components/auth/TextInput";
 import AuthLayout from "../../layouts/AuthLayout";
+import { getParamByName } from "../../utils/controller";
 import styles from "./Login.module.css";
 
 export default class Login extends Component {
@@ -25,7 +26,29 @@ export default class Login extends Component {
     }
 
     componentDidMount(){
+
         document.title="ورود";
+
+        let url_params = window.location.href.split("?")[1];
+
+        if(!url_params){
+            
+            url_params = "";
+            
+            if(!getParamByName("authenticationRequest")){
+                url_params = "?authenticationRequest="+encodeURIComponent(window.location.href);
+            }
+
+        }else{
+
+            url_params = "?"+url_params;
+
+            if(!getParamByName("authenticationRequest")){
+                url_params += "&authenticationRequest="+encodeURIComponent(window.location.href);
+            }
+        }
+
+        this.setState({url_params});
         
         //fill_fakedata(this);
     }
@@ -82,7 +105,7 @@ export default class Login extends Component {
                             <div className={styles.sec1}>
                                 <span>
                                 {"حساب کاربری ندارم."}
-                                <a href={"/register"}>
+                                <a href={env.PATHS.REGISTER_PAGE+this.state.url_params}>
                                     {"ساخت حساب کاربری جدید "}
                                 </a>
                                 </span>
@@ -92,11 +115,11 @@ export default class Login extends Component {
 
                         <div className={styles.sec2}>
 
-                            <a href="/aboutUs">{"درباره ما"}</a>
+                            <a href={env.PATHS.ABOUT_PAGE}>{"درباره ما"}</a>
 
                             <div>|</div>
 
-                            <a href="/help">{"راهنمای استفاده"}</a>
+                            <a href={env.PATHS.GUIDES_PAGE}>{"راهنمای استفاده"}</a>
 
                         </div>
                     </>:null

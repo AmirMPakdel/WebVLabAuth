@@ -1,25 +1,21 @@
-const domain = window.env.DOMAIN;
 import axios from "axios";
-import env from "../env";
 import controller from "./controller";
 import { getCookie } from "./cookie";
 
 const myServer = {
 
     urls:{
-        DOMAIN:domain,
-
         //register
-        REGISTER_USER:domain+"/registration/user/register",
-        REGISTER_OPT_RESEND:domain+"/registration/user/otp/resend",
-        REGISTER_OPT_CONFIRM:domain+"/registration/user/otp/confirm",
-        RECREATE_OPT_CONFIRM:domain+"/registration/user/recreate/otp/confirm",
-        RECREATE_CONFIRM:domain+"/registration/user/recreate/confirm",
+        REGISTER_USER:"/registration/user/register",
+        REGISTER_OPT_RESEND:"/registration/user/otp/resend",
+        REGISTER_OPT_CONFIRM:"/registration/user/otp/confirm",
+        RECREATE_OPT_CONFIRM:"/registration/user/recreate/otp/confirm",
+        RECREATE_CONFIRM:"/registration/user/recreate/confirm",
 
         //login
-        LOGIN_USER:domain+"/authorization/oauth/authenticate",
-        LOGIN_WAITING:domain+"/authorization/oauth/waitting-page",
-        LOGIN_REDIRECT:domain+"/authorization/oauth/rediret/client-page",
+        LOGIN_USER:"/authorization/oauth/authenticate",
+        LOGIN_WAITING:"/authorization/oauth/waitting-page",
+        LOGIN_REDIRECT:"/authorization/oauth/rediret/client-page",
     },
 
     Get,
@@ -32,18 +28,35 @@ const myServer = {
  * @param {import("axios").AxiosRequestConfig} config 
  * @param {(err, data)=>{}} cb
  */
-function Get(url, config, cb){
+function Get(url, config={}, cb){
 
-    if(!config.noAuthorization){
-        config.headers={
-            'Authorization': "Bearer "+getCookie(env.TOKEN_KEY),
-            'Accept-Language': "fa",
-        }
+    let headers = {
+        'Accept-Language': 'fa',
     }
 
-    axios.get(url, config).then(res=>{
+    if(config.token){
 
-        if(window.env.ENVIRONMENT_MODE==="dev"){
+        let token = getCookie(env[config.token.key]);
+        headers['Authorization']='Bearer '+ token;
+    }
+
+    let domain = env.PATHS.DOMAIN;
+
+    if(config.domain !== undefined){
+    
+        domain = config.domain;
+    }
+
+    config = {
+        method: "get",
+        url: domain+url,
+        headers,
+    }
+
+    axios(config)
+    .then(res=>{
+
+        if(env.ENVIRONMENT_MODE==="dev"){
             console.log(res);
         }
 
@@ -58,7 +71,7 @@ function Get(url, config, cb){
     }).catch(e=>{
         
         cb(e, null)
-        controller.openNotification(window.env.NETWORK_ERROR, null, "error")
+        controller.openNotification(env.NETWORK_ERROR, null, "error")
         //TODO: ?
     });
 }
@@ -79,14 +92,22 @@ function Post(url, data, config={}, cb){
         'Content-Type': 'application/json'
     }
 
-    let token = getCookie(env.TOKEN_KEY);
-    if(token){
-        headers['Authorization']='Bearer '+getCookie(env.TOKEN_KEY);
+    if(config.token){
+
+        let token = getCookie(env[config.token.key]);
+        headers['Authorization']='Bearer '+ token;
+    }
+
+    let domain = env.PATHS.DOMAIN;
+
+    if(config.domain !== undefined){
+    
+        domain = config.domain;
     }
 
     config = {
         method: 'post',
-        url,
+        url: domain+url,
         headers,
         data
     };
@@ -94,7 +115,7 @@ function Post(url, data, config={}, cb){
     axios(config)
     .then(function (res) {
 
-        if(window.env.ENVIRONMENT_MODE==="dev"){
+        if(env.ENVIRONMENT_MODE==="dev"){
             console.log(res);
         }
 
@@ -138,7 +159,7 @@ function Post(url, data, config={}, cb){
 
         }else{
 
-            controller.openNotification(window.env.NETWORK_ERROR, null, "error");
+            controller.openNotification(env.NETWORK_ERROR, null, "error");
 
             cb(e, null);
         }
@@ -152,7 +173,7 @@ function expetions(error_data){
         showErrorNotif:true
     };
 
-    if(error_data.error.errorCode === window.env.REGISTER_TIME_EXPIRED){
+    if(error_data.error.errorCode === env.SERVER_CODES.REGISTER_TIME_EXPIRED){
 
         setTimeout(()=>{
 
@@ -161,7 +182,7 @@ function expetions(error_data){
         }, 1500);
         
 
-    }else if(error_data.error.errorCode === window.env.ACCOUNT_EXISTS){
+    }else if(error_data.error.errorCode === env.SERVER_CODES.ACCOUNT_EXISTS){
 
         exobj.showErrorNotif = false;
     }

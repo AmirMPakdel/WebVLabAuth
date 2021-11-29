@@ -1,17 +1,42 @@
-window.env={
+env={
 
-    DOMAIN:"http://api.mob-id.com",
-
+    // app's envirnment type -> "dev" | "prd"
     ENVIRONMENT_MODE: "dev",
 
+    //doamin of your sever
+    PATHS:{
+
+        DOMAIN: "http://api.mob-id.com",
+
+        LOGIN_PAGE: "/login",
+
+        REGISTER_PAGE: "/register",
+
+        TERMS_PAGE: "/terms", // قوانین و مقررات
+
+        ABOUT_PAGE: "/about", // درباره ما
+
+        GUIDES_PAGE: "/guides", // راهنمای استفاده
+    },
+    
     NETWORK_ERROR:"خطا در برقراری ارتباط با سرور",
 
-    SMS_TIMER:120, //seconds
+    // waiting time for sending the applet again in seconds
+    SMS_TIMER:120, 
 
+    // scope param sending for login request
     LOGIN_SCOPE: "profile-read,address-read",
 
-    G_RECAPTCHA_KEY:"6Lc4X5YcAAAAAPBIe2PeidBpB2aMLv_vaskdQIIK",
+    // google recaptcha api key
+    G_RECAPTCHA_KEY: "6Lc4X5YcAAAAAPBIe2PeidBpB2aMLv_vaskdQIIK",
 
+    // cookie key for register
+    REGISTER_TOKEN_KEY: "__vlb_rgt",
+
+    // cookie key for login
+    LOGIN_TOKEN_KEY: "__vlb_lgt",
+
+    // slider objects for register slider
     REGISTER_SLIDERS:[
         {
             image:"/statics/fake_img/register_slide1.jpg",
@@ -30,6 +55,7 @@ window.env={
         },
     ],
 
+    // important server codes
     SERVER_CODES:{
 
         //register

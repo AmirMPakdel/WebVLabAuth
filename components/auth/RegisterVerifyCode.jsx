@@ -20,8 +20,8 @@ export default class RegisterVerifyCode extends Component {
 
         clearInterval(this.interval);
         this.props.parent.state.show_send_again=false;
-        this.props.parent.state.counter = SMS_TIMER;
-        this.props.parent.state.timer = numberToTime(SMS_TIMER);
+        this.props.parent.state.counter = env.SMS_TIMER;
+        this.props.parent.state.timer = numberToTime(env.SMS_TIMER);
         this.props.parent.setState(this.props.parent.state);
         this.interval = setInterval(()=>{
 

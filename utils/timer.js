@@ -1,7 +1,3 @@
-import env from "../env";
-
-export const SMS_TIMER = window.env.SMS_TIMER;
-
 export function numberToTime(num){
 
     let sec = num % 60;

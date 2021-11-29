@@ -1,6 +1,5 @@
 import { Component } from "react";
-import env from "../../env";
-import controller from "../../utils/controller";
+import controller, { getParamByName } from "../../utils/controller";
 import myServer from "../../utils/myServer";
 import { checkCodeMeli, email_validation, mobile_validation } from "../../utils/validation";
 
@@ -83,7 +82,7 @@ export function register(c){
         lastName:s.last_name,
         nationalId: s.national_code,
         "g-recaptcha-response":s.g_recaptcha,
-        authenticationRequest: window.location.href,
+        authenticationRequest: decodeURIComponent(getParamByName("authenticationRequest")),
         email:s.email,
         password:s.password,
         confirmPassword:s.password_conf,
@@ -108,8 +107,7 @@ export function register(c){
 
         }else{
 
-            console.log(data);
-            if(data.error.errorCode == window.env.SERVER_CODES.ACCOUNT_EXISTS){
+            if(data.error.errorCode == env.SERVER_CODES.ACCOUNT_EXISTS){
 
                 c.state.trackingId = data.response.trackingId;
                 c.state.page="opt";
@@ -125,50 +123,6 @@ export function register(c){
             register_btn_loading:false
         })
     });
-
-    // setTimeout(()=>{
-    //     let err = false;
-    //     let data={
-    //         message:t1,
-    //         response:{
-    //             //successful:true, 
-    //             successful:false,
-    //             trackingId:"223231232",
-    //         }, 
-    //         error:{errorCode:12800}
-    //     }
-    //     ///////////
-    //     if(!err){
-
-    //         if(data.response.successful && data.response.trackingId){
-
-    //             c.state.trackingId = data.response.trackingId;
-    //             c.state.page="opt";
-    //             c.state.same_mobile=false;
-    //             c.state.same_mobile_message="";
-    //             c.state.recreate_confirm_message="";
-    //             c.wcard.style.height="32rem";
-    //             c.right_sec.style.padding="2rem";
-    //             window.scrollTo(null, 0);
-
-    //         }else if(data.error && data.error.errorCode==12800){
-
-    //             c.state.trackingId = data.response.trackingId;
-    //             c.state.page="opt";
-    //             c.state.same_mobile=true;
-    //             c.state.same_mobile_message=data.message;
-    //             c.wcard.style.height="32rem";
-    //             c.right_sec.style.padding="2rem";
-    //             window.scrollTo(null, 0);
-    //         }
-    //     }
-
-    //     c.setState({
-    //         register_btn_loading:false
-    //     })
-    //     ///////////
-
-    // },2000);
 }
 
 /**@param {Component} c*/
@@ -195,25 +149,6 @@ export function registerOptResend(c){
 
         c.request_lock = false;
     });
-
-    // setTimeout(()=>{
-    //     let err=false;
-    //     let data={response:{successful:true}}
-    //     /////////
-    //     if(!err){
-
-    //         let d = data.response;
-
-    //         if(d.successful){
-    //             controller.openNotification("کد تایید مجددا ارسال گردید", null, "success");
-    //             c.RegisterVerifyCode.startCountdown();
-    //         }
-    //     }
-
-    //     c.request_lock = false;
-    //     /////////
-    // },2000);
-    
 }
 
 /**@param {Component} c*/
@@ -251,36 +186,6 @@ export function registerOptConfirm(c){
 
         c.setState({opt_confirm_btn_loading:false});
     });
-
-    // setTimeout(()=>{
-    //     let err = false;
-    //     let data = {message:"پیغامی برای کاربر", response:{successful:true, status:"DONE"}}
-    //     /////////
-    //     if(!err){
-
-    //         let d = data.response;
-
-    //         if(d.successful){
-
-    //             if(d.status==="DONE"){
-
-    //                 controller.openNotification(data.message, null, "success");
-
-    //                 setTimeout(()=>{
-    //                     window.location.href=d.urls;
-    //                 },500);
-
-    //             }else{
-
-    //                 controller.openNotification(data.message, null, "alert");
-    //             }
-    //         }
-    //     }
-
-    //     c.setState({opt_confirm_btn_loading:false});
-    //     /////////
-
-    // },2000)
 }
 
 /**@param {Component} c*/
@@ -312,39 +217,6 @@ export function recreateOptConfirm(c){
 
         c.setState({opt_confirm_btn_loading:false});
     });
-
-    // setTimeout(()=>{
-    //     let err = false;
-    //     let data = {
-    //         message:t1, 
-    //         response:{
-    //             successful:true, 
-    //             status:"DONE",
-    //             phone:"09118015081",
-    //             nationalId:"2581095598",
-    //             firstname:"علی",
-    //             lastname:"گل محمدی",
-    //         }
-    //     }
-    //     /////////
-    //     if(!err){
-
-    //         let d = data.response;
-    //         if(d.successful){
-    //             c.state.old_user = {
-    //                 phone: d.phone,
-    //                 nationalId: d.nationalId,
-    //                 firstname: d.firstname,
-    //                 lastname: d.lastname,
-    //             }
-    //             c.state.recreate_confirm_message = data.message;
-    //             c.state.page = "recreate";
-    //         }
-    //     }
-
-    //     c.setState({opt_confirm_btn_loading:false});
-    //     /////////
-    // },2000)
 }
 
 /**@param {Component} c*/
@@ -379,33 +251,4 @@ export function recreateConfirm(c){
             }
         }
     });
-
-    // setTimeout(()=>{
-    //     let err= false;
-    //     let data = {message:"پیغامی برای کاربر", response:{successful:true, status:"DONE"}}
-    //     /////////
-    //     if(!err){
-
-    //         let d = data.response;
-
-    //         if(d.successful){
-
-    //             if(d.status==="DONE"){
-
-    //                 controller.openNotification(data.message, null, "success");
-
-    //                 setTimeout(()=>{
-    //                     window.location.href=d.urls;
-    //                 },500);
-
-    //             }else{
-
-    //                 controller.openNotification(data.message, null, "alert");
-    //             }
-    //         }
-    //     }
-
-    // },2000)
 }
-
-const t1 = `توسط اسلج‌همر گیمز توسعه داده می‌شود، دارای حالت‌های داستانی، چند نفره و زامبی خواهد بود که در اطراف اروپا و اقیانوس آرام هنگام جنگ جهانی دوم اتفاق می‌افتد و داستان آن حول محور تولد نیروهای ویژه‌ی ایالات متحده است.`

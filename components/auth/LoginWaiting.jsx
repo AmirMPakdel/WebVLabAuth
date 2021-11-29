@@ -2,7 +2,7 @@ import { Carousel } from "antd";
 import React, { Component } from "react";
 import styles from "./LoginWaiting.module.css";
 import Loading from "../index/Loading";
-import { numberToTime, SMS_TIMER } from "../../utils/timer";
+import { numberToTime } from "../../utils/timer";
 import { login, loginSendAgain, loginWaiting } from "../../api/auth/login";
 
 export default class LoginWaiting extends Component {
@@ -34,8 +34,8 @@ export default class LoginWaiting extends Component {
     startCountdown=()=>{
         clearInterval(this.interval);
         this.props.parent.state.show_send_again=false;
-        this.props.parent.state.counter = SMS_TIMER;
-        this.props.parent.state.timer = numberToTime(SMS_TIMER);
+        this.props.parent.state.counter = env.SMS_TIMER;
+        this.props.parent.state.timer = numberToTime(env.SMS_TIMER);
         this.props.parent.setState(this.props.parent.state);
         this.interval = setInterval(()=>{
 
@@ -115,4 +115,4 @@ export default class LoginWaiting extends Component {
     }
 }
 
-const sliders_obj = window.env.REGISTER_SLIDERS;
+const sliders_obj = env.REGISTER_SLIDERS;
